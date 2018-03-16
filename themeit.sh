@@ -1,7 +1,7 @@
 #For now, all project names are d7nci.  It can be changed later.
 #Need a constant for now so that the git submodules work with static address. 
 
-PROJECT_NAME=d7nci
+PROJECT_NAME=$1
 
 MYSQL_USERNAME=drupal
 MYSQL_PASSWORD=drupal
@@ -32,12 +32,12 @@ mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"show databases;"
 echo "Changing setting databse to correct project name"
 cp ../assets/settings.php .
 chmod 775 settings.php
-sed -i 's/d7composer/$PROJECT_NAME/g' settings.php
+sed -i .bak 's/d7composer/$PROJECT_NAME/' settings.php
 sudo rm web/sites/default/settings.php
 sudo mv settings.php web/sites/default/
 sudo chmod 444 web/sites/default/settings.php
 
-drush cr
+#drush cr
 
 echo "Your new Project is ready"
 echo "Change Diretory to $PROJECT_NAME to view the files"
