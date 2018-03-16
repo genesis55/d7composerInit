@@ -23,17 +23,19 @@ echo "  MYSQL_PASSWORD: $MYSQL_PASSWORD"
 
 mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"drop database $PROJECT_NAME;"
 mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"create database $PROJECT_NAME;"
-  930  mysql -udrupal -pdrupal lionel2 < assets/d7composer.sql 
 #echo "mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT_NAME < assets/d7composer.sql;""
-mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT_NAME < assets/d7composer.sql;
+mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT_NAME < ../assets/d7composer.sql;
 mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"show databases;"
 
 
 #cp assets/settings.php
 echo "Changing setting databse to correct project name"
-cp assets/settings.php .
+cp ../assets/settings.php .
 chmod 775 settings.php
 sed -i 's/d7composer/$PROJECT_NAME/g' settings.php
+sudo rm web/sites/default/settings.php
+sudo mv settings.php web/sites/default/
+sudo chmod 444 web/sites/default/settings.php
 
 drush cr
 
