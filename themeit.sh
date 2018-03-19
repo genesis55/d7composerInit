@@ -2,14 +2,26 @@
 #Need a constant for now so that the git submodules work with static address. 
 
 PROJECT_NAME=$1
+MYSQL_USERNAME=$2
+MYSQL_PASSWORD=$3
 
-MYSQL_USERNAME=drupal
-MYSQL_PASSWORD=drupal
 MYSQL_DRUPAL_DATABASE=$PROJECT_NAME
 DRUPAL_ADMIN_PASSWORD=Admin\!1
 
+if [ "$MYSQL_PASSWORD" == "" ]; then
+	echo
+	echo "SYNTAX:"
+	echo "themeit.sh <project name> <mysql user> <mysql password>"
+	echo 
+	exit 1
+fi
+
 composer create-project drupal-composer/drupal-project:7.x $PROJECT_NAME --stability dev
+#Add multiproject-theme module as submodule
+git submodule add https://github.com/CBIIT/drupal-multipurpose-theme.git $PROJECT_NAME/web/sites/all/themes/drupal-multipurpose-theme
+
 cd $PROJECT_NAME
+
 echo "Install database with drush"
 #Add database
 echo "Creating Initial Drupal Database:"
