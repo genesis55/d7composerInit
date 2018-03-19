@@ -32,7 +32,8 @@ mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"show databases;"
 echo "Changing setting databse to correct project name"
 cp ../assets/settings.php .
 chmod 775 settings.php
-sed -i .bak 's/d7composer/$PROJECT_NAME/' settings.php
+echo "Changing database name in settings.php to $PROJECT_NAME"
+sed -i .bak "s/d7composer/$PROJECT_NAME/" settings.php
 sudo rm web/sites/default/settings.php
 sudo mv settings.php web/sites/default/
 sudo chmod 444 web/sites/default/settings.php
