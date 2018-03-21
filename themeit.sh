@@ -4,6 +4,7 @@
 PROJECT_NAME=$1
 MYSQL_USERNAME=$2
 MYSQL_PASSWORD=$3
+IP=$4
 
 MYSQL_DRUPAL_DATABASE=$PROJECT_NAME
 DRUPAL_ADMIN_PASSWORD=Admin\!1
@@ -33,11 +34,11 @@ echo "  MYSQL_PASSWORD: $MYSQL_PASSWORD"
 #We will import a standard initial database for now.
 #drush -y si --db-url=mysql://$MYSQL_USERNAME:$MYSQL_PASSWORD@127.0.0.1:3306/$MYSQL_DRUPAL_DATABASE --account-pass=$DRUPAL_ADMIN_PASSWORD
 
-mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"drop database $PROJECT_NAME;"
-mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"create database $PROJECT_NAME;"
+mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -h$IP -e"drop database $PROJECT_NAME;"
+mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD  -h$IP -e"create database $PROJECT_NAME;"
 #echo "mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT_NAME < assets/d7composer.sql;""
-mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT_NAME < ../assets/d7composer.sql;
-mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD -e"show databases;"
+mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD  -h$IP $PROJECT_NAME < ../assets/d7composer.sql;
+mysql -u$MYSQL_USERNAME -p$MYSQL_PASSWORD  -h$IP -e"show databases;"
 
 
 #cp assets/settings.php
