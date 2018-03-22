@@ -1,5 +1,6 @@
 FROM cbiit/centos7:base
 MAINTAINER Shaun Einolf
+#March 22, 2018 - Added Composer
 
 LABEL \
   BASE_OS="CBIIT CentOS 7" \
@@ -33,10 +34,16 @@ RUN yum -y install \
     supervisor \
     util-linux \
     vi \
-    which
+    which \
+    curl
 
 RUN cd tmp \
   && drush dl drupal-7.52
+
+#install composer
+RUN cd tmp \
+  && curl -sS https://getcomposer.org/installer | php \
+  && mv composer.phar /usr/local/bin/composer 
 
 ADD conf/.htaccess /tmp
 
